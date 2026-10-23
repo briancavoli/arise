@@ -1,4 +1,4 @@
-/* How I Rise — content from the "How I Rise" Google Doc.
+/* Arise — content from the "How I Rise" Google Doc.
    Edit this file to change affirmations, readings, or videos. */
 window.HOW_I_RISE = {
 

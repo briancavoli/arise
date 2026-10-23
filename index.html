@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#2E6DA4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="How I Rise">
+<meta name="apple-mobile-web-app-title" content="Arise">
 <meta name="robots" content="noindex, nofollow">
-<title>How I Rise</title>
+<title>Arise</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -238,7 +238,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
 <!-- LIBRARY -->
 <section class="screen" id="library" aria-labelledby="library-h">
   <header>
-    <p class="eyebrow">From How I Rise</p>
+    <p class="eyebrow">From your How I Rise doc</p>
     <h1 id="library-h">Library</h1>
   </header>
   <section aria-labelledby="watch-h" style="display:flex;flex-direction:column;gap:10px">
@@ -313,7 +313,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   var C = window.HOW_I_RISE;
 
   /* ---------- storage (this device only) ---------- */
-  var KEY = "howirise.v1";
+  var KEY = "arise.v1";
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } }
   var S = load();
   S.days = S.days || {};
@@ -569,7 +569,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
 
   document.getElementById("export-btn").addEventListener("click", function(){
     var blob = new Blob([JSON.stringify(S, null, 2)], { type: "application/json" });
-    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "how-i-rise-backup-" + todayKey() + ".json";
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "arise-backup-" + todayKey() + ".json";
     document.body.appendChild(a); a.click(); a.remove();
   });
 

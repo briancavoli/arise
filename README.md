@@ -1,6 +1,6 @@
-# How I Rise
+# Arise
 
-A personal mindset app built from the "How I Rise" Google Doc: a morning affirmation and centering practice, an in-the-moment reset, a three-slider evening check-in with a 7-day view, and a library of readings and videos.
+Arise is a personal mindset app built from the "How I Rise" Google Doc: a morning affirmation and centering practice, an in-the-moment reset, a three-slider evening check-in with a 7-day view, and a library of readings and videos.
 
 ## Files
 
