@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2E6DA4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="How I Rise">
+<meta name="robots" content="noindex, nofollow">
+<title>How I Rise</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<style>
+:root{
+  --ground:#F2F8FD; --surface:#FFFFFF; --ink:#12355B; --muted:#4E6378;
+  --sky:#2E6DA4; --sky-deep:#255C8E; --sky-line:#4A86BE; --sky-text:#EAF4FD; --sky-label:#FFEBB0;
+  --gold:#F2B705; --gold-ink:#8A5C00; --gold-soft:#FFF1C7;
+  --line:#DCE8F2; --line-soft:#E7EFF6; --chip:#CFE0EE; --bar:#A9CBEA;
+  --serif:'Newsreader',Georgia,serif; --sans:'Manrope',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);-webkit-text-size-adjust:100%}
+body{min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.app{max-width:480px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(110px + env(safe-area-inset-bottom))}
+.screen{display:none;flex-direction:column;gap:18px}
+.screen.active{display:flex}
+.eyebrow{margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.01em}
+h2{margin:0;font-size:15px;font-weight:700}
+.mantra{margin:0;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--gold-ink)}
+header{display:flex;flex-direction:column;gap:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.feature{background:var(--sky);color:#fff;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.feature .label{margin:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sky-label)}
+.affirmation{margin:0;font-family:var(--serif);font-size:23px;line-height:1.32;min-height:2.64em}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.pill{min-height:44px;padding:0 18px;border-radius:999px;font-size:14px;font-weight:600}
+.pill.ghost{border:1px solid #A9CBEA;background:transparent;color:#fff}
+.pill.light{border:0;background:var(--ground);color:var(--ink);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--chip);background:var(--surface);color:var(--ink);font-size:14px;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);font-weight:700}
+.primary{min-height:54px;border-radius:14px;border:0;background:var(--gold);color:var(--ink);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+.secondary{min-height:52px;border-radius:14px;border:0;background:var(--sky);color:#fff;font-size:15px;font-weight:700;width:100%}
+.practice-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.practice-head p{margin:0}
+.track{height:8px;border-radius:999px;background:var(--gold-soft);overflow:hidden;margin-bottom:8px}
+.fill{height:8px;background:var(--gold);width:0;transition:width .3s}
+.check{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;border:0;background:none;padding:4px 0;color:var(--ink);font-size:14px;font-weight:600;text-align:left}
+.box{width:24px;height:24px;flex-shrink:0;border-radius:7px;border:2px solid var(--chip);display:flex;align-items:center;justify-content:center}
+.check[aria-checked="true"] .box{background:var(--gold);border-color:var(--gold)}
+.check[aria-checked="true"] .box::after{content:"";width:6px;height:11px;border:solid var(--ink);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+/* Reset */
+.feature.breath{flex-direction:row;gap:16px;align-items:center}
+.circle-wrap{width:120px;height:120px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.circle{width:108px;height:108px;border-radius:999px;border:2px solid var(--sky-label);background:var(--sky-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:scale(.8);transition:transform linear}
+.circle .phase{margin:0;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sky-label);text-align:center;padding:0 6px}
+.circle .count{margin:0;font-family:var(--serif);font-size:40px;line-height:1}
+.breath-text{margin:0;font-size:14px;line-height:1.45;color:var(--sky-text)}
+.steps{padding:6px 16px}
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.step:last-child{border-bottom:0}
+.num{margin:0;width:26px;height:26px;flex-shrink:0;border-radius:999px;background:var(--gold-soft);color:var(--gold-ink);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-title{margin:0;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.step-text{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.serif-line{margin:0;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.35;color:var(--gold-ink)}
+.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:50;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* Evening */
+.questions{padding:4px 18px;gap:0}
+.questions p{margin:0;padding:12px 0;border-bottom:1px solid var(--sky-line);font-family:var(--serif);font-size:19px;line-height:1.3}
+.questions p:last-child{border-bottom:0}
+#sliders{display:flex;flex-direction:column;gap:16px}
+.slider{display:flex;flex-direction:column;gap:2px}
+.slider-head{display:flex;justify-content:space-between;align-items:baseline}
+.slider label{font-size:15px;font-weight:600}
+.slider .val{font-size:13px;font-weight:700;color:var(--gold-ink)}
+.slider .hint{margin:0;font-size:12px;color:var(--muted)}
+input[type=range]{width:100%;height:36px;margin:0;accent-color:#E0A800}
+.week{display:flex;gap:16px;align-items:center}
+.dial{position:relative;width:88px;height:88px;flex-shrink:0}
+.dial-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dial-num{font-size:22px;font-weight:700;line-height:1}
+.dial-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.bars{flex:1;display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:flex-end;gap:8px}
+.bar-name{width:70px;font-size:12px;color:var(--muted)}
+.bar-set{display:flex;align-items:flex-end;gap:3px;height:20px}
+.bar{width:9px;border-radius:2px;background:var(--bar)}
+.bar.today{background:var(--gold)}
+.bar.empty{background:var(--line-soft);height:3px}
+.trend{font-size:13px;font-weight:700;color:var(--gold-ink);min-width:12px}
+/* Library */
+.section-head{display:flex;justify-content:space-between;align-items:baseline}
+.videos{display:flex;gap:12px;overflow-x:auto;padding:0 0 6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.video{flex:0 0 160px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);scroll-snap-align:start}
+.thumb{height:94px;border-radius:14px;background:var(--sky) center/cover no-repeat;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.thumb::before{content:"";position:absolute;inset:0;background:rgba(18,53,91,.25)}
+.thumb svg{position:relative}
+.video-title{font-size:14px;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.video-src{font-size:12px;color:var(--muted)}
+.list{padding:0 16px}
+.item{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:8px 0;border:0;border-bottom:1px solid var(--line-soft);background:none;color:var(--ink);text-align:left}
+.item:last-child{border-bottom:0}
+.item-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.item-title{font-size:15px;font-weight:700}
+.item-sub{font-size:13px;color:var(--muted)}
+.linkbtn{border:0;background:none;color:var(--gold-ink);font-size:13px;font-weight:700;min-height:44px;padding:0 4px;text-decoration:underline}
+/* Sheet */
+.sheet{position:fixed;inset:0;z-index:40;display:none;background:var(--ground);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet.open{display:block}
+.sheet-inner{max-width:480px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 20px calc(40px + env(safe-area-inset-bottom))}
+.sheet-bar{position:sticky;top:0;background:var(--ground);display:flex;align-items:center;justify-content:space-between;padding:8px 0 12px;z-index:1}
+.close{min-width:44px;min-height:44px;border-radius:999px;border:1px solid var(--chip);background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center}
+.article h2{font-size:22px;margin:22px 0 8px;font-family:var(--serif);font-weight:400}
+.article h3{font-size:13px;margin:18px 0 6px;letter-spacing:.06em;text-transform:uppercase}
+.article p{margin:0 0 12px;font-size:16px;line-height:1.55}
+.article ul{margin:0 0 12px;padding-left:20px}
+.article li{font-size:16px;line-height:1.5;margin-bottom:6px}
+.article .quote{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.4;color:var(--gold-ink);margin:8px 0 14px}
+.article .affirm{font-family:var(--serif);font-size:21px;line-height:1.38;margin:0 0 16px}
+.article a{color:var(--gold-ink);font-weight:700}
+/* Centering */
+.center-wrap{min-height:calc(100vh - 140px);display:flex;flex-direction:column;justify-content:center;gap:22px}
+.center-step{font-family:var(--serif);font-size:27px;line-height:1.35;margin:0}
+.dots{display:flex;gap:8px}
+.dot{width:10px;height:10px;border-radius:999px;background:var(--chip)}
+.dot.on{background:var(--gold)}
+/* Nav */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:30}
+.nav-inner{max-width:480px;margin:0 auto;display:flex;justify-content:space-around}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:64px;min-height:48px;border:0;background:none;color:var(--muted);font-size:11px;font-weight:600;padding-top:4px}
+.tab[aria-current="page"]{color:var(--ink);font-weight:700}
+.tab[aria-current="page"] svg{color:var(--gold-ink)}
+.footer-note{text-align:center;margin:0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+
+<!-- TODAY -->
+<section class="screen active" id="today" aria-labelledby="today-h">
+  <header>
+    <p class="eyebrow" id="today-eyebrow">Today</p>
+    <h1 id="today-h">Good morning, Brian</h1>
+    <p class="mantra">I have nothing to prove in this moment.</p>
+  </header>
+  <section class="feature" aria-label="Today's affirmation">
+    <p class="label" id="aff-label">Today's affirmation</p>
+    <p class="affirmation" id="aff-text" aria-live="polite"></p>
+    <div class="row">
+      <button class="pill ghost" type="button" id="aff-next">Another one</button>
+      <button class="pill light" type="button" id="aff-keep" aria-pressed="false">Keep this one</button>
+    </div>
+  </section>
+  <section aria-labelledby="quality-h" style="display:flex;flex-direction:column;gap:10px">
+    <h2 id="quality-h" style="color:var(--gold-ink)">Practice one quality today</h2>
+    <div class="chips" id="qualities"></div>
+  </section>
+  <button class="primary" type="button" id="start-centering">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M10 8.5v7l6-3.5z"/></svg>
+    Start 5-minute centering
+  </button>
+  <section class="card" aria-labelledby="practice-h">
+    <div class="practice-head">
+      <h2 id="practice-h">30-day practice · <span id="day-num">Day 1</span></h2>
+      <p class="small muted" id="practice-count">0 of 3 today</p>
+    </div>
+    <div class="track"><div class="fill" id="practice-fill"></div></div>
+    <div id="practice-list"></div>
+  </section>
+</section>
+
+<!-- RESET -->
+<section class="screen" id="reset" aria-labelledby="reset-h">
+  <header>
+    <p class="eyebrow">In the moment</p>
+    <h1 id="reset-h">Slow the game down</h1>
+  </header>
+  <section class="feature breath" aria-label="Calm breath">
+    <div class="circle-wrap"><div class="circle" id="circle"><p class="phase" id="phase">Ready</p><p class="count" id="count">6</p></div></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <p class="breath-text">Deep breath in. Then a little more. Hold. Exhale slowly for 6 seconds.</p>
+      <button class="pill light" type="button" id="breath-btn" style="align-self:flex-start">Start breath</button>
+    </div>
+  </section>
+  <section class="card steps" aria-label="Notice, don't judge, choose">
+    <div class="step"><p class="num">1</p><div><p class="step-title">Notice</p><p class="step-text">What am I feeling? What story am I telling myself?</p></div></div>
+    <div class="step"><p class="num">2</p><div><p class="step-title">Don't judge</p><p class="step-text">I can feel this without criticizing myself for it.</p></div></div>
+    <div class="step"><p class="num">3</p><div><p class="step-title">Choose</p><p class="step-text">What response reflects the man I'm becoming?</p></div></div>
+  </section>
+  <section aria-label="Ten to fifteen second reset" style="display:flex;flex-direction:column;gap:4px;padding:0 4px">
+    <p class="eyebrow">The 10–15 second reset</p>
+    <p class="serif-line" id="reset-line">I missed that one, but I'm getting the next one.</p>
+  </section>
+  <button class="primary" type="button" id="pause-btn">I took a deliberate pause</button>
+  <p class="small muted footer-note" id="pause-count"></p>
+</section>
+
+<!-- EVENING -->
+<section class="screen" id="evening" aria-labelledby="evening-h">
+  <header>
+    <p class="eyebrow">Evening · Five minutes</p>
+    <h1 id="evening-h">Look back, kindly</h1>
+  </header>
+  <section class="feature questions" aria-label="Evening questions">
+    <p>Where did I remain centered today?</p>
+    <p>Where did an old habit take over?</p>
+    <p>What will I practice differently tomorrow?</p>
+  </section>
+  <section class="card" aria-labelledby="rate-h" style="display:flex;flex-direction:column;gap:10px">
+    <h2 id="rate-h">Rate today</h2>
+    <div id="sliders"></div>
+  </section>
+  <section class="card week" aria-labelledby="week-h">
+    <h2 id="week-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Last 7 days</h2>
+    <div class="dial">
+      <svg id="dial-svg" role="img" aria-label="No ratings yet" width="88" height="88" viewBox="0 0 88 88">
+        <circle cx="44" cy="44" r="36" fill="none" stroke="#FFF1C7" stroke-width="8"/>
+        <circle id="dial-arc" cx="44" cy="44" r="36" fill="none" stroke="#F2B705" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 227" transform="rotate(-90 44 44)"/>
+      </svg>
+      <div class="dial-center"><span class="dial-num" id="dial-num">–</span><span class="dial-label">7-DAY</span></div>
+    </div>
+    <div class="bars" id="bars"></div>
+  </section>
+  <button class="secondary" type="button" id="done-btn">Done for today</button>
+</section>
+
+<!-- LIBRARY -->
+<section class="screen" id="library" aria-labelledby="library-h">
+  <header>
+    <p class="eyebrow">From How I Rise</p>
+    <h1 id="library-h">Library</h1>
+  </header>
+  <section aria-labelledby="watch-h" style="display:flex;flex-direction:column;gap:10px">
+    <div class="section-head"><h2 id="watch-h">Watch for inspiration</h2><span class="small muted" id="video-count"></span></div>
+    <div class="videos" id="videos"></div>
+  </section>
+  <section aria-labelledby="read-h" style="display:flex;flex-direction:column;gap:10px">
+    <h2 id="read-h">Read and revisit</h2>
+    <div class="card list" id="reads"></div>
+  </section>
+  <section aria-labelledby="kept-h" style="display:none;flex-direction:column;gap:10px" id="kept-wrap">
+    <h2 id="kept-h">Affirmations I kept</h2>
+    <div class="card" id="kept"></div>
+  </section>
+  <div class="row" style="justify-content:center">
+    <button class="linkbtn" type="button" id="export-btn">Back up my ratings</button>
+  </div>
+</section>
+
+</main>
+
+<!-- Reader sheet -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-inner">
+    <div class="sheet-bar">
+      <p class="eyebrow" id="sheet-eyebrow">Library</p>
+      <button class="close" type="button" id="sheet-close" aria-label="Close">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <h1 id="sheet-title"></h1>
+    <div class="article" id="sheet-body"></div>
+  </div>
+</div>
+
+<!-- Centering sheet -->
+<div class="sheet" id="centering" role="dialog" aria-modal="true" aria-labelledby="center-title">
+  <div class="sheet-inner">
+    <div class="sheet-bar">
+      <p class="eyebrow" id="center-title">Five minutes to establish my center</p>
+      <button class="close" type="button" id="center-close" aria-label="Close">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="center-wrap">
+      <div class="dots" id="center-dots" aria-hidden="true"></div>
+      <p class="center-step" id="center-text" aria-live="polite"></p>
+      <button class="primary" type="button" id="center-next">Next</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<nav aria-label="Main">
+  <div class="nav-inner">
+    <button class="tab" type="button" data-tab="today" aria-current="page">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Today</button>
+    <button class="tab" type="button" data-tab="reset">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg>Reset</button>
+    <button class="tab" type="button" data-tab="evening">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>Evening</button>
+    <button class="tab" type="button" data-tab="library">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h7"/></svg>Library</button>
+  </div>
+</nav>
+
+<script src="content.js"></script>
+<script>
+(function(){
+  "use strict";
+  var C = window.HOW_I_RISE;
+
+  /* ---------- storage (this device only) ---------- */
+  var KEY = "howirise.v1";
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } }
+  var S = load();
+  S.days = S.days || {};
+  S.kept = S.kept || [];
+  if (!S.start) S.start = todayKey();
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+  save();
+
+  function todayKey(d){ d = d || new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  function day(k){ k = k || todayKey(); if (!S.days[k]) S.days[k] = {}; return S.days[k]; }
+  function daysBetween(a,b){ var A=new Date(a+"T12:00:00"), B=new Date(b+"T12:00:00"); return Math.round((B-A)/864e5); }
+
+  var toastEl = document.getElementById("toast"), toastT;
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200); }
+
+  /* ---------- tabs ---------- */
+  var tabs = document.querySelectorAll(".tab");
+  function show(id){
+    document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("active", s.id === id); });
+    tabs.forEach(function(t){ if (t.dataset.tab === id) t.setAttribute("aria-current","page"); else t.removeAttribute("aria-current"); });
+    window.scrollTo(0,0);
+    if (id === "evening") renderWeek();
+    try { history.replaceState(null, "", "#" + id); } catch(e){}
+  }
+  tabs.forEach(function(t){ t.addEventListener("click", function(){ show(t.dataset.tab); }); });
+
+  /* ---------- today ---------- */
+  var h = new Date().getHours();
+  var part = h < 12 ? "Morning" : h < 17 ? "Afternoon" : "Evening";
+  document.getElementById("today-eyebrow").textContent = new Date().toLocaleDateString(undefined, { weekday: "long" }) + " · " + part;
+  document.getElementById("today-h").textContent = (h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening") + ", Brian";
+
+  var pool = C.affirmations;
+  var seed = daysBetween("2026-01-01", todayKey());
+  var affIdx = ((seed % pool.length) + pool.length) % pool.length;
+  var affText = document.getElementById("aff-text"), affLabel = document.getElementById("aff-label"), keepBtn = document.getElementById("aff-keep");
+  function renderAff(){
+    var a = pool[affIdx];
+    affText.textContent = a.text;
+    affLabel.textContent = "Today's affirmation · " + a.source;
+    var kept = S.kept.indexOf(a.text) > -1;
+    keepBtn.setAttribute("aria-pressed", kept ? "true" : "false");
+    keepBtn.textContent = kept ? "Kept ✓" : "Keep this one";
+  }
+  document.getElementById("aff-next").addEventListener("click", function(){ affIdx = (affIdx + 1) % pool.length; renderAff(); });
+  keepBtn.addEventListener("click", function(){
+    var t = pool[affIdx].text, i = S.kept.indexOf(t);
+    if (i > -1) { S.kept.splice(i,1); toast("Removed from kept"); } else { S.kept.unshift(t); toast("Saved to your Library"); }
+    save(); renderAff(); renderKept();
+  });
+  renderAff();
+
+  var qWrap = document.getElementById("qualities");
+  C.qualities.forEach(function(q){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = q;
+    b.addEventListener("click", function(){ var d = day(); d.quality = d.quality === q ? null : q; save(); renderQualities(); });
+    qWrap.appendChild(b);
+  });
+  function renderQualities(){
+    var cur = day().quality;
+    qWrap.querySelectorAll(".chip").forEach(function(b){ b.setAttribute("aria-pressed", b.textContent === cur ? "true" : "false"); });
+  }
+  renderQualities();
+
+  var practices = [
+    { id: "center", label: "Five minutes to establish my center" },
+    { id: "pause", label: "One deliberate pause" },
+    { id: "evening", label: "Five minutes of evening reflection" }
+  ];
+  var pList = document.getElementById("practice-list");
+  practices.forEach(function(p){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "check"; b.setAttribute("role","checkbox"); b.dataset.id = p.id;
+    b.innerHTML = '<span class="box" aria-hidden="true"></span><span></span>';
+    b.lastChild.textContent = p.label;
+    b.addEventListener("click", function(){ var d = day(); d[p.id] = !d[p.id]; save(); renderPractice(); });
+    pList.appendChild(b);
+  });
+  function mark(id){ day()[id] = true; save(); renderPractice(); }
+  function renderPractice(){
+    var d = day(), n = 0;
+    pList.querySelectorAll(".check").forEach(function(b){ var on = !!d[b.dataset.id]; if (on) n++; b.setAttribute("aria-checked", on ? "true" : "false"); });
+    document.getElementById("practice-count").textContent = n + " of 3 today";
+    document.getElementById("practice-fill").style.width = (n / 3 * 100) + "%";
+    var dn = daysBetween(S.start, todayKey()) + 1;
+    document.getElementById("day-num").textContent = dn <= 30 ? "Day " + dn : "Day " + dn + " · keep going";
+  }
+  renderPractice();
+
+  /* centering */
+  var cSheet = document.getElementById("centering"), cStep = 0, cText = document.getElementById("center-text"), cNext = document.getElementById("center-next"), cDots = document.getElementById("center-dots");
+  C.centering.forEach(function(){ var s = document.createElement("span"); s.className = "dot"; cDots.appendChild(s); });
+  function renderCenter(){
+    var txt = C.centering[cStep];
+    if (cStep === 3 && day().quality) txt = "Today I'm practicing " + day().quality.toLowerCase() + ". Hold it in mind.";
+    cText.textContent = txt;
+    cDots.querySelectorAll(".dot").forEach(function(d,i){ d.classList.toggle("on", i <= cStep); });
+    cNext.textContent = cStep === C.centering.length - 1 ? "I'm centered" : "Next";
+  }
+  document.getElementById("start-centering").addEventListener("click", function(){ cStep = 0; renderCenter(); openSheet(cSheet, cNext); });
+  cNext.addEventListener("click", function(){
+    if (cStep < C.centering.length - 1) { cStep++; renderCenter(); }
+    else { closeSheet(cSheet); mark("center"); toast("Centered. Go well."); }
+  });
+  document.getElementById("center-close").addEventListener("click", function(){ closeSheet(cSheet); });
+
+  /* ---------- reset ---------- */
+  var circle = document.getElementById("circle"), phaseEl = document.getElementById("phase"), countEl = document.getElementById("count"), breathBtn = document.getElementById("breath-btn");
+  var phases = [ ["Breathe in", 4, 1], ["A little more", 2, 1.08], ["Hold", 4, 1.08], ["Exhale", 6, .8] ];
+  var running = false, timer = null, cycles = 0;
+  function stopBreath(){ running = false; clearTimeout(timer); breathBtn.textContent = "Start breath"; phaseEl.textContent = "Ready"; countEl.textContent = "6"; circle.style.transitionDuration = ".6s"; circle.style.transform = "scale(.8)"; }
+  function runPhase(i, left){
+    if (!running) return;
+    var p = phases[i];
+    if (left === p[1]) { phaseEl.textContent = p[0]; circle.style.transitionDuration = p[1] + "s"; circle.style.transform = "scale(" + p[2] + ")"; }
+    countEl.textContent = left;
+    timer = setTimeout(function(){
+      if (left > 1) return runPhase(i, left - 1);
+      if (i < phases.length - 1) return runPhase(i + 1, phases[i + 1][1]);
+      cycles++;
+      if (cycles >= 3) { stopBreath(); phaseEl.textContent = "Well done"; return; }
+      runPhase(0, phases[0][1]);
+    }, 1000);
+  }
+  breathBtn.addEventListener("click", function(){
+    if (running) return stopBreath();
+    running = true; cycles = 0; breathBtn.textContent = "Stop"; runPhase(0, phases[0][1]);
+  });
+  var resetLines = C.resetLines, rl = 0;
+  setInterval(function(){ rl = (rl + 1) % resetLines.length; document.getElementById("reset-line").textContent = resetLines[rl]; }, 8000);
+  function renderPauses(){ var n = day().pauses || 0; document.getElementById("pause-count").textContent = n ? n + (n === 1 ? " deliberate pause today" : " deliberate pauses today") : ""; }
+  document.getElementById("pause-btn").addEventListener("click", function(){ var d = day(); d.pauses = (d.pauses || 0) + 1; d.pause = true; save(); renderPauses(); renderPractice(); toast("Pause noted. Let your words stand."); });
+  renderPauses();
+
+  /* ---------- evening ---------- */
+  var sWrap = document.getElementById("sliders");
+  C.attributes.forEach(function(a){
+    var d = day(), v = (d.ratings && d.ratings[a.id]) || 3;
+    var el = document.createElement("div"); el.className = "slider";
+    el.innerHTML = '<div class="slider-head"><label for="r-' + a.id + '"></label><span class="val"></span></div><input id="r-' + a.id + '" type="range" min="1" max="5" step="1"><p class="hint"></p>';
+    el.querySelector("label").textContent = a.name;
+    el.querySelector(".hint").textContent = a.hint;
+    var input = el.querySelector("input"), val = el.querySelector(".val");
+    input.value = v; val.textContent = v + " / 5";
+    input.setAttribute("aria-valuetext", v + " out of 5");
+    input.addEventListener("input", function(){ val.textContent = input.value + " / 5"; input.setAttribute("aria-valuetext", input.value + " out of 5"); });
+    sWrap.appendChild(el);
+  });
+  document.getElementById("done-btn").addEventListener("click", function(){
+    var d = day(); d.ratings = {};
+    C.attributes.forEach(function(a){ d.ratings[a.id] = +document.getElementById("r-" + a.id).value; });
+    d.evening = true; save(); renderWeek(); renderPractice(); toast("Saved. Rest well.");
+  });
+  var barsEl = document.getElementById("bars");
+  function lastDays(n){ var out = []; for (var i = n - 1; i >= 0; i--){ var dt = new Date(); dt.setDate(dt.getDate() - i); out.push(todayKey(dt)); } return out; }
+  function renderWeek(){
+    var keys = lastDays(7), sum = 0, cnt = 0;
+    barsEl.innerHTML = "";
+    C.attributes.forEach(function(a){
+      var row = document.createElement("div"); row.className = "bar-row";
+      var name = document.createElement("span"); name.className = "bar-name"; name.textContent = a.name;
+      var set = document.createElement("div"); set.className = "bar-set"; set.setAttribute("aria-hidden","true");
+      var vals = [];
+      keys.forEach(function(k, i){
+        var r = S.days[k] && S.days[k].ratings, v = r ? r[a.id] : null;
+        var b = document.createElement("div"); b.className = "bar";
+        if (v) { b.style.height = (v / 5 * 20) + "px"; vals.push(v); sum += v; cnt++; if (i === 6) b.classList.add("today"); }
+        else b.classList.add("empty");
+        set.appendChild(b);
+      });
+      var tr = document.createElement("span"); tr.className = "trend";
+      if (vals.length >= 2) {
+        var half = Math.floor(vals.length / 2), early = avg(vals.slice(0, half)), late = avg(vals.slice(half));
+        tr.textContent = late - early > .3 ? "↑" : early - late > .3 ? "↓" : "→";
+        tr.setAttribute("aria-label", late - early > .3 ? "trending up" : early - late > .3 ? "trending down" : "steady");
+      }
+      row.appendChild(name); row.appendChild(set); row.appendChild(tr);
+      barsEl.appendChild(row);
+    });
+    var a = cnt ? sum / cnt : 0;
+    document.getElementById("dial-num").textContent = cnt ? a.toFixed(1) : "–";
+    document.getElementById("dial-arc").setAttribute("stroke-dasharray", (a / 5 * 226.2) + " 227");
+    document.getElementById("dial-svg").setAttribute("aria-label", cnt ? "7-day average " + a.toFixed(1) + " out of 5" : "No ratings yet");
+  }
+  function avg(a){ return a.reduce(function(x,y){ return x + y; }, 0) / a.length; }
+  renderWeek();
+
+  /* ---------- library ---------- */
+  var vWrap = document.getElementById("videos");
+  document.getElementById("video-count").textContent = C.videos.length + " videos";
+  var playIcon = '<svg aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M10 8.5v7l6-3.5z"/></svg>';
+  C.videos.forEach(function(v, i){
+    var a = document.createElement("a");
+    a.className = "video"; a.href = v.url; a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = '<div class="thumb">' + playIcon + '</div><span class="video-title"></span><span class="video-src"></span>';
+    var t = a.querySelector(".video-title"), src = a.querySelector(".video-src"), th = a.querySelector(".thumb");
+    t.textContent = v.title || "Inspiration clip " + i;
+    src.textContent = v.source;
+    if (v.thumb) th.style.backgroundImage = "url('" + v.thumb + "')";
+    if (v.source === "Vimeo") {
+      fetch("https://vimeo.com/api/oembed.json?width=320&url=" + encodeURIComponent(v.url))
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(j){ if (!j) return; if (j.title) t.textContent = j.title; if (j.thumbnail_url) th.style.backgroundImage = "url('" + j.thumbnail_url + "')"; })
+        .catch(function(){});
+    }
+    vWrap.appendChild(a);
+  });
+
+  var rWrap = document.getElementById("reads"), sheet = document.getElementById("sheet"), sheetBody = document.getElementById("sheet-body");
+  C.readings.forEach(function(r){
+    var b = document.createElement("button"); b.type = "button"; b.className = "item";
+    b.innerHTML = '<span class="item-text"><span class="item-title"></span><span class="item-sub"></span></span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4E6378" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>';
+    b.querySelector(".item-title").textContent = r.title;
+    b.querySelector(".item-sub").textContent = r.sub;
+    b.addEventListener("click", function(){ openReading(r); });
+    rWrap.appendChild(b);
+  });
+  function openReading(r){
+    document.getElementById("sheet-title").textContent = r.title;
+    sheetBody.innerHTML = "";
+    r.body.forEach(function(blk){
+      var el;
+      if (blk.h2) { el = document.createElement("h2"); el.textContent = blk.h2; }
+      else if (blk.h3) { el = document.createElement("h3"); el.textContent = blk.h3; }
+      else if (blk.quote) { el = document.createElement("p"); el.className = "quote"; el.textContent = blk.quote; }
+      else if (blk.affirm) { el = document.createElement("p"); el.className = "affirm"; el.textContent = blk.affirm; }
+      else if (blk.li) { el = document.createElement("ul"); blk.li.forEach(function(x){ var li = document.createElement("li"); li.textContent = x; el.appendChild(li); }); }
+      else if (blk.links) { el = document.createElement("p"); blk.links.forEach(function(l, i){ if (i) el.appendChild(document.createTextNode(" · ")); var a = document.createElement("a"); a.href = l.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = l.label; el.appendChild(a); }); }
+      else { el = document.createElement("p"); el.textContent = blk.p; }
+      sheetBody.appendChild(el);
+    });
+    openSheet(sheet, document.getElementById("sheet-close"));
+  }
+  document.getElementById("sheet-close").addEventListener("click", function(){ closeSheet(sheet); });
+
+  var lastFocus = null;
+  function openSheet(s, focusEl){ lastFocus = document.activeElement; s.classList.add("open"); s.scrollTop = 0; document.body.style.overflow = "hidden"; setTimeout(function(){ focusEl && focusEl.focus(); }, 30); }
+  function closeSheet(s){ s.classList.remove("open"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") document.querySelectorAll(".sheet.open").forEach(closeSheet); });
+
+  function renderKept(){
+    var wrap = document.getElementById("kept-wrap"), box = document.getElementById("kept");
+    box.innerHTML = "";
+    wrap.style.display = S.kept.length ? "flex" : "none";
+    S.kept.forEach(function(t, i){
+      var p = document.createElement("p");
+      p.style.cssText = "margin:0;padding:12px 0;font-family:var(--serif);font-size:18px;line-height:1.35;" + (i < S.kept.length - 1 ? "border-bottom:1px solid var(--line-soft)" : "");
+      p.textContent = t; box.appendChild(p);
+    });
+  }
+  renderKept();
+
+  document.getElementById("export-btn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(S, null, 2)], { type: "application/json" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "how-i-rise-backup-" + todayKey() + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  var start = (location.hash || "").slice(1);
+  if (["today","reset","evening","library"].indexOf(start) > -1) show(start);
+})();
+</script>
+</body>
+</html>
