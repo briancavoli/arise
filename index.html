@@ -48,14 +48,12 @@ header{display:flex;flex-direction:column;gap:6px}
 .chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);font-weight:700}
 .primary{min-height:54px;border-radius:14px;border:0;background:var(--gold);color:var(--ink);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
 .secondary{min-height:52px;border-radius:14px;border:0;background:var(--sky);color:#fff;font-size:15px;font-weight:700;width:100%}
-.practice-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.practice-head p{margin:0}
-.track{height:8px;border-radius:999px;background:var(--gold-soft);overflow:hidden;margin-bottom:8px}
-.fill{height:8px;background:var(--gold);width:0;transition:width .3s}
-.check{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;border:0;background:none;padding:4px 0;color:var(--ink);font-size:14px;font-weight:600;text-align:left}
-.box{width:24px;height:24px;flex-shrink:0;border-radius:7px;border:2px solid var(--chip);display:flex;align-items:center;justify-content:center}
-.check[aria-checked="true"] .box{background:var(--gold);border-color:var(--gold)}
-.check[aria-checked="true"] .box::after{content:"";width:6px;height:11px;border:solid var(--ink);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+/* Meditations */
+.stoic{padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--gold)}
+.stoic-label{margin:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink)}
+.stoic-quote{margin:0;font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.42;color:var(--ink)}
+.stoic-by{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--muted)}
+.pill.outline{border:1px solid var(--chip);background:var(--surface);color:var(--ink)}
 .muted{color:var(--muted)}
 .small{font-size:13px}
 /* Reset */
@@ -162,6 +160,14 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
       <button class="pill light" type="button" id="aff-keep" aria-pressed="false">Keep this one</button>
     </div>
   </section>
+  <section class="card stoic" aria-label="A passage from Meditations">
+    <p class="stoic-label" id="med-label">Meditations</p>
+    <blockquote class="stoic-quote" id="med-text" aria-live="polite"></blockquote>
+    <p class="stoic-by">Marcus Aurelius</p>
+    <div class="row">
+      <button class="pill outline" type="button" id="med-next">Another one</button>
+    </div>
+  </section>
   <section aria-labelledby="quality-h" style="display:flex;flex-direction:column;gap:10px">
     <h2 id="quality-h" style="color:var(--gold-ink)">Practice one quality today</h2>
     <div class="chips" id="qualities"></div>
@@ -170,14 +176,6 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M10 8.5v7l6-3.5z"/></svg>
     Start 5-minute centering
   </button>
-  <section class="card" aria-labelledby="practice-h">
-    <div class="practice-head">
-      <h2 id="practice-h">30-day practice · <span id="day-num">Day 1</span></h2>
-      <p class="small muted" id="practice-count">0 of 3 today</p>
-    </div>
-    <div class="track"><div class="fill" id="practice-fill"></div></div>
-    <div id="practice-list"></div>
-  </section>
 </section>
 
 <!-- RESET -->
@@ -366,6 +364,18 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   });
   renderAff();
 
+  /* Meditations: a different passage each day, offset from the affirmation */
+  var med = C.meditations;
+  var medIdx = (((seed * 7 + 3) % med.length) + med.length) % med.length;
+  var medText = document.getElementById("med-text"), medLabel = document.getElementById("med-label");
+  function renderMed(){
+    var m = med[medIdx];
+    medText.textContent = m.text;
+    medLabel.textContent = "Meditations " + m.ref + " · " + m.theme;
+  }
+  document.getElementById("med-next").addEventListener("click", function(){ medIdx = (medIdx + 1) % med.length; renderMed(); });
+  renderMed();
+
   var qWrap = document.getElementById("qualities");
   C.qualities.forEach(function(q){
     var b = document.createElement("button");
@@ -379,30 +389,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   }
   renderQualities();
 
-  var practices = [
-    { id: "center", label: "Five minutes to establish my center" },
-    { id: "pause", label: "One deliberate pause" },
-    { id: "evening", label: "Five minutes of evening reflection" }
-  ];
-  var pList = document.getElementById("practice-list");
-  practices.forEach(function(p){
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "check"; b.setAttribute("role","checkbox"); b.dataset.id = p.id;
-    b.innerHTML = '<span class="box" aria-hidden="true"></span><span></span>';
-    b.lastChild.textContent = p.label;
-    b.addEventListener("click", function(){ var d = day(); d[p.id] = !d[p.id]; save(); renderPractice(); });
-    pList.appendChild(b);
-  });
-  function mark(id){ day()[id] = true; save(); renderPractice(); }
-  function renderPractice(){
-    var d = day(), n = 0;
-    pList.querySelectorAll(".check").forEach(function(b){ var on = !!d[b.dataset.id]; if (on) n++; b.setAttribute("aria-checked", on ? "true" : "false"); });
-    document.getElementById("practice-count").textContent = n + " of 3 today";
-    document.getElementById("practice-fill").style.width = (n / 3 * 100) + "%";
-    var dn = daysBetween(S.start, todayKey()) + 1;
-    document.getElementById("day-num").textContent = dn <= 30 ? "Day " + dn : "Day " + dn + " · keep going";
-  }
-  renderPractice();
+  function mark(id){ day()[id] = true; save(); }
 
   /* centering */
   var cSheet = document.getElementById("centering"), cStep = 0, cText = document.getElementById("center-text"), cNext = document.getElementById("center-next"), cDots = document.getElementById("center-dots");
@@ -446,7 +433,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   var resetLines = C.resetLines, rl = 0;
   setInterval(function(){ rl = (rl + 1) % resetLines.length; document.getElementById("reset-line").textContent = resetLines[rl]; }, 8000);
   function renderPauses(){ var n = day().pauses || 0; document.getElementById("pause-count").textContent = n ? n + (n === 1 ? " deliberate pause today" : " deliberate pauses today") : ""; }
-  document.getElementById("pause-btn").addEventListener("click", function(){ var d = day(); d.pauses = (d.pauses || 0) + 1; d.pause = true; save(); renderPauses(); renderPractice(); toast("Pause noted. Let your words stand."); });
+  document.getElementById("pause-btn").addEventListener("click", function(){ var d = day(); d.pauses = (d.pauses || 0) + 1; d.pause = true; save(); renderPauses(); toast("Pause noted. Let your words stand."); });
   renderPauses();
 
   /* ---------- evening ---------- */
@@ -466,7 +453,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   document.getElementById("done-btn").addEventListener("click", function(){
     var d = day(); d.ratings = {};
     C.attributes.forEach(function(a){ d.ratings[a.id] = +document.getElementById("r-" + a.id).value; });
-    d.evening = true; save(); renderWeek(); renderPractice(); toast("Saved. Rest well.");
+    d.evening = true; save(); renderWeek(); toast("Saved. Rest well.");
   });
   var barsEl = document.getElementById("bars");
   function lastDays(n){ var out = []; for (var i = n - 1; i >= 0; i--){ var dt = new Date(); dt.setDate(dt.getDate() - i); out.push(todayKey(dt)); } return out; }

@@ -49,6 +49,34 @@ window.HOW_I_RISE = {
     { source: "Becoming", text: "Calm. Clear. Deliberate." }
   ],
 
+  /* Meditations, Marcus Aurelius. George Long's public-domain translation,
+     lightly modernized. "theme" ties each passage to a principle in the doc. */
+  meditations: [
+    { ref: "2.1",  theme: "Meeting resistance", text: "Begin the morning by saying to yourself: I shall meet with the busybody, the ungrateful, the arrogant, the deceitful. None of them can injure me." },
+    { ref: "2.5",  theme: "Every day like the last", text: "Do every act of your life as if it were the last, laying aside all carelessness, all hypocrisy and self-love." },
+    { ref: "3.4",  theme: "Others' judgments", text: "Do not waste the rest of your life in thoughts about others. Wondering what another is saying, thinking or contriving only pulls you from your own ruling part." },
+    { ref: "4.3",  theme: "Holding my center", text: "People seek retreats for themselves, houses in the country, sea-shores and mountains. But nowhere does a person retreat with more quiet or more freedom from trouble than into their own soul." },
+    { ref: "4.7",  theme: "Rejection is information", text: "Take away your opinion, and the complaint \"I have been harmed\" is taken away. Take away the complaint, and the harm is taken away." },
+    { ref: "4.18", theme: "Others' judgments", text: "How much trouble he avoids who does not look to see what his neighbour says or does or thinks, but only to what he does himself." },
+    { ref: "4.24", theme: "Restraint is a choice", text: "Occupy yourself with few things, if you would be tranquil. Most of what we say and do is not necessary. Take it away, and you will have more leisure and less uneasiness." },
+    { ref: "4.49", theme: "Unshaken", text: "Be like the promontory against which the waves continually break. It stands firm and tames the fury of the water around it." },
+    { ref: "5.1",  theme: "Meaningful work", text: "In the morning when you rise unwillingly, let this thought be present: I am rising to the work of a human being." },
+    { ref: "5.16", theme: "I choose the station", text: "Such as are your habitual thoughts, such also will be the character of your mind; for the soul is dyed by the thoughts." },
+    { ref: "5.20", theme: "Diamonds from pressure", text: "The mind turns every hindrance to its activity into an aid. That which is an obstacle on the road helps us on this road." },
+    { ref: "6.6",  theme: "Nothing done in anger", text: "The best way of avenging yourself is not to become like the wrongdoer." },
+    { ref: "6.30", theme: "Calm, not passive", text: "Keep yourself simple, good, pure, serious, free from affectation, a friend of justice, kind, affectionate, strenuous in all proper acts." },
+    { ref: "7.8",  theme: "Tolerating uncertainty", text: "Do not let future things disturb you. You will come to them, if you must, with the same reason you now use for present things." },
+    { ref: "7.59", theme: "Self-trust", text: "Look within. Within is the fountain of good, and it will ever bubble up, if you will ever dig." },
+    { ref: "7.69", theme: "Every day like the last", text: "The perfection of character is this: to live each day as if it were the last, without agitation, without torpor, without pretence." },
+    { ref: "8.47", theme: "I am not my thoughts", text: "If you are pained by any external thing, it is not this thing that disturbs you, but your own judgement about it. And it is in your power to wipe out this judgement now." },
+    { ref: "8.48", theme: "Calm is strength", text: "The mind which is free from passions is a citadel. A person has nothing more secure to which to fly for refuge." },
+    { ref: "8.51", theme: "Deliberate speech", text: "Do not be sluggish in your actions, nor without method in your conversation, nor wandering in your thoughts." },
+    { ref: "9.6",  theme: "Presence", text: "Your present judgement grounded in understanding, your present conduct directed to the common good, your present contentment with whatever happens: that is enough." },
+    { ref: "10.16", theme: "Practice being him", text: "No longer talk at all about the kind of man that a good man ought to be, but be such." },
+    { ref: "11.9", theme: "Meeting resistance", text: "Those who stand in your way when you act by right reason cannot turn you aside. Do not let them turn you from goodwill toward them either. To be angry with them is as much a weakness as to give way through fear." },
+    { ref: "12.4", theme: "I know my value", text: "Every man loves himself more than all the rest of men, yet sets less value on his own opinion of himself than on the opinion of others." }
+  ],
+
   videos: [
     { title: "Force yourself to grow", source: "Huberman · YouTube", url: "https://www.youtube.com/watch?v=LQTwpagPMw0", thumb: "https://img.youtube.com/vi/LQTwpagPMw0/hqdefault.jpg" },
     { source: "Vimeo", url: "https://vimeo.com/1236823524" },
