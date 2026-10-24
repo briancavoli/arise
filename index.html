@@ -53,6 +53,8 @@ header{display:flex;flex-direction:column;gap:6px}
 .stoic-label{margin:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink)}
 .stoic-quote{margin:0;font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.42;color:var(--ink)}
 .stoic-by{margin:0 0 4px;font-size:13px;font-weight:600;color:var(--muted)}
+.stoic-note{margin:0 0 4px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:14px;line-height:1.5;color:var(--muted)}
+.stoic-note[hidden]{display:none}
 .pill.outline{border:1px solid var(--chip);background:var(--surface);color:var(--ink)}
 .muted{color:var(--muted)}
 .small{font-size:13px}
@@ -164,6 +166,7 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
     <p class="stoic-label" id="med-label">Meditations</p>
     <blockquote class="stoic-quote" id="med-text" aria-live="polite"></blockquote>
     <p class="stoic-by">Marcus Aurelius</p>
+    <p class="stoic-note" id="med-note"></p>
     <div class="row">
       <button class="pill outline" type="button" id="med-next">Another one</button>
     </div>
@@ -367,11 +370,13 @@ nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:
   /* Meditations: a different passage each day, offset from the affirmation */
   var med = C.meditations;
   var medIdx = (((seed * 7 + 3) % med.length) + med.length) % med.length;
-  var medText = document.getElementById("med-text"), medLabel = document.getElementById("med-label");
+  var medText = document.getElementById("med-text"), medLabel = document.getElementById("med-label"), medNote = document.getElementById("med-note");
   function renderMed(){
     var m = med[medIdx];
     medText.textContent = m.text;
-    medLabel.textContent = "Meditations " + m.ref + " · " + m.theme;
+    medLabel.textContent = "Meditations" + (m.ref ? " " + m.ref : "") + (m.theme ? " · " + m.theme : "");
+    medNote.textContent = m.note || "";
+    medNote.hidden = !m.note;
   }
   document.getElementById("med-next").addEventListener("click", function(){ medIdx = (medIdx + 1) % med.length; renderMed(); });
   renderMed();
