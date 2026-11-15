@@ -1,11 +1,16 @@
 # Arise
 
-Arise is a personal mindset app built from the "How I Rise" Google Doc: a morning affirmation and centering practice, an in-the-moment reset, a three-slider evening check-in with a 7-day view, and a library of readings and videos.
+Arise is Brian's personal mindset app, organized as four pages:
+
+- **Today** – My Daily Compass: a rotating "Today's focus," What I want, How I show up, and When Self 1 shows up
+- **Inspire** – a Meditations passage (from Brian's curated list) and a Navy SEAL mindset line, each with "Another one"
+- **Mindset** – videos and readings from the "How I Rise" Google Doc
+- **Discover** – takeaways from personal-development books, each tied to a compass item with a "Try this" action
 
 ## Files
 
 - `index.html` – the app (layout, styles, behavior)
-- `content.js` – all text: affirmations, readings, videos, slider names. Edit this to update content.
+- `content.js` – all text. Edit this to update the compass, quotes, readings, videos or book insights.
 - `manifest.json`, `icon*.png`, `icon.svg` – lets the app be added to a phone home screen with its own icon
 
 ## Hosting
@@ -14,4 +19,4 @@ Served by GitHub Pages from the `main` branch root. On iPhone, open the site in 
 
 ## Your data
 
-Ratings, the quality you pick, practices checked off and affirmations you keep are stored only in the browser on each device (localStorage). Nothing is sent anywhere. Use "Back up my ratings" in the Library to download a copy.
+The app stores nothing and sends nothing anywhere.

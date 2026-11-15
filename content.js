@@ -1,52 +1,125 @@
-/* Arise — content from the "How I Rise" Google Doc.
-   Edit this file to change affirmations, readings, or videos. */
+/* Arise — content for Brian's personal mindset app.
+   Edit this file to change any text in the app. Pages:
+   Today (compass), Inspire (meditations + seal), Mindset (videos + readings), Discover (discover). */
 window.HOW_I_RISE = {
 
-  qualities: ["Patience", "Restraint", "Confidence", "Presence", "Self-trust"],
+  /* ---------- TODAY: My Daily Compass ---------- */
+  compass: {
+    label: "My Daily Compass",
+    headline: "Create the future.",
+    sub: "Clear mind. Quiet confidence. Deliberate action.",
+    want: [
+      { name: "Meaningful Impact", text: "Build something that changes how people work." },
+      { name: "Freedom", text: "Work where and how I choose." },
+      { name: "Great People", text: "Work with people I like, trust, and respect." },
+      { name: "A Full Life", text: "Work hard, enjoy life, and make time for what matters." }
+    ],
+    showUp: [
+      { name: "Focus", text: "Know what matters. Eliminate the noise." },
+      { name: "Confidence", text: "Trust my experience, judgment, and ability to figure things out." },
+      { name: "Initiative", text: "Recognize opportunities. Create possibilities. Take action." },
+      { name: "Consistency", text: "Do the work. Make progress every day. Persevere." },
+      { name: "Calm", text: "Slow my mind, not my ambition." }
+    ],
+    self1: {
+      lead: "Notice it. Don't argue with it. Don't obey it.",
+      lines: [
+        "A thought is not a fact.",
+        "Possibility is not probability.",
+        "Uncertainty is not failure."
+      ],
+      close: "I don't need to predict the outcome. I need to take the next step."
+    },
+    closing: "Trust yourself. Take action. Enjoy it."
+  },
 
-  attributes: [
-    { id: "composed", name: "Composed", hint: "My voice was quiet control: low, unhurried, steady." },
-    { id: "precise",  name: "Precise",  hint: "Precision and conclusion. Signal, less noise." },
-    { id: "unshaken", name: "Unshaken", hint: "Confident under resistance. I am not my thoughts." }
+  /* ---------- INSPIRE: Navy SEAL ----------
+     SEAL Ethos lines are from the U.S. Navy SEAL Ethos (a public U.S. government text).
+     Other entries are widely known sayings or short lines from former SEALs.
+     Notes are reflections written for Brian. */
+  seal: [
+    { text: "The only easy day was yesterday.", by: "Navy SEAL motto", note: "Today's work is the work. Yesterday's wins don't carry it for you." },
+    { text: "Slow is smooth, smooth is fast.", by: "SEAL saying", note: "Calm is a speed advantage. Rushing creates the errors that slow you down." },
+    { text: "I will never quit. I persevere and thrive on adversity.", by: "The Navy SEAL Ethos", note: "Consistency isn't a mood. It's a decision you make before the hard day arrives." },
+    { text: "If knocked down, I will get back up, every time.", by: "The Navy SEAL Ethos", note: "A setback ends a moment, not a pursuit. The only question is how fast you return." },
+    { text: "The ability to control my emotions and my actions, regardless of circumstance, sets me apart from other men.", by: "The Navy SEAL Ethos", note: "Self-command is the edge. Other people's intensity doesn't have to set your pace." },
+    { text: "I lead by example in all situations.", by: "The Navy SEAL Ethos", note: "Let behavior carry the explanation. People follow what you do." },
+    { text: "Ready to lead, ready to follow, never quit.", by: "Navy SEAL saying", note: "Confidence includes knowing when to step back and let someone else drive." },
+    { text: "Get comfortable being uncomfortable.", by: "SEAL training mantra", note: "Uncertainty is not failure. It's the normal condition of building something new." },
+    { text: "Two is one, and one is none.", by: "SEAL saying", note: "Don't rest the future on one opportunity. Keep several options in motion." },
+    { text: "Discipline equals freedom.", by: "Jocko Willink, former Navy SEAL", note: "The freedom you want is built from the routines you keep when no one is watching." },
+    { text: "Good.", by: "Jocko Willink, on setbacks", note: "When something goes wrong, find what it gives you: time, information, a better path." },
+    { text: "There are no bad teams, only bad leaders.", by: "Jocko Willink & Leif Babin, Extreme Ownership", note: "Own the outcome. It puts the next move back in your hands." },
+    { text: "If you want to change the world, start off by making your bed.", by: "Adm. William H. McRaven, former Navy SEAL", note: "Momentum starts small. One task done well makes the next one easier." },
+    { text: "Feed the courage wolf.", by: "Mark Divine, former Navy SEAL", note: "The thoughts you feed get stronger. Give your attention to the voice that moves you forward." },
+    { text: "Win in your mind first.", by: "Mark Divine, former Navy SEAL", note: "See the step clearly before you take it. Then take it without re-arguing." },
+    { text: "When you think you're done, you're only at 40 percent.", by: "David Goggins, former Navy SEAL (the 40% rule)", note: "The first \"I can't\" is usually Self 1 talking, not your real limit." }
   ],
 
-  centering: [
-    "Sit quietly. Breathe naturally. Release the need to immediately do something.",
-    "I have nothing to prove in this moment.",
-    "Picture one challenging moment today. See yourself responding with composure, curiosity and deliberate speech.",
-    "Choose one quality to practice today: patience, restraint, confidence, presence or self-trust.",
-    "What is the most meaningful action I can take toward my future today?"
-  ],
-
-  resetLines: [
-    "I missed that one, but I'm getting the next one.",
-    "I love this game. There is nowhere else I'd rather be.",
-    "I can always say more. I don't always need to.",
-    "A setback is information, not a verdict on me."
-  ],
-
-  affirmations: [
-    { source: "Daily Mindset", text: "Today I will meet resistance. It's not a problem. I will handle it." },
-    { source: "Daily Mindset", text: "I can't control everything, but I can control how I show up. I hold my center." },
-    { source: "Daily Mindset", text: "I am not my thoughts. I am a thinker of thoughts." },
-    { source: "Daily Mindset", text: "I am grateful for all I have." },
-    { source: "Daily Mindset", text: "I live every day like it's my last. I use it to make something amazing." },
-    { source: "Manifesting", text: "I can visualize myself living the life I want." },
-    { source: "Manifesting", text: "I have a strategy and I act on it, all the time." },
-    { source: "Manifesting", text: "Like a radio, what I tune into I will attract. I am the creator. I choose the station." },
-    { source: "What I manifest", text: "I am a growth marketing leader in a healthcare and home care company." },
-    { source: "What I manifest", text: "I'm great at working with teams of all sizes to help them grow." },
-    { source: "What I manifest", text: "I am a calm and confident speaker, at ease in any environment. I focus on my breath." },
-    { source: "What I manifest", text: "I thrive in the moment. I am informed and prepared. I see, learn and adapt. I can do this." },
-    { source: "Guiding principles", text: "I know my value. I am willing to learn, but I don't require others to validate my identity." },
-    { source: "Guiding principles", text: "Calm is a form of strength. I don't need urgency to demonstrate importance." },
-    { source: "Guiding principles", text: "Restraint is a choice. I don't need to explain everything I know." },
-    { source: "Guiding principles", text: "I can tolerate uncertainty. I don't have to know the outcome to trust my ability to respond." },
-    { source: "Guiding principles", text: "Rejection is information, not identity." },
-    { source: "Guiding principles", text: "My ambition remains intact. I am changing the source of my motivation, not my aspirations." },
-    { source: "Becoming", text: "I don't need to prove that I'm a different man. I need to practice being him." },
-    { source: "Becoming", text: "I will not abandon myself." },
-    { source: "Becoming", text: "Calm. Clear. Deliberate." }
+  /* ---------- DISCOVER: book insights ----------
+     Takeaways are summaries in plain words, tied to Brian's compass.
+     read: true = a book or author Brian already reads. */
+  discover: [
+    { pillar: "Calm", book: "The Inner Game of Tennis", author: "W. Timothy Gallwey", read: true,
+      title: "Performance is potential minus interference",
+      insight: "Gallwey's core idea: you rarely need more skill. You need less interference. Self 1, the anxious, instructing voice, gets in the way of Self 2, the part of you that already knows how to perform.",
+      tryThis: "Before your next important conversation, ask: what's the interference right now? Name it, then put your attention on the other person's words." },
+    { pillar: "Focus", book: "The Inner Game of Tennis", author: "W. Timothy Gallwey", read: true,
+      title: "Observe without judging, and the correction comes",
+      insight: "Labeling a shot \"bad\" tightens you up. Simply noticing what happened, where the ball went, how the swing felt, lets the body adjust on its own. Judgment adds noise; observation adds information.",
+      tryThis: "After a meeting that felt off, describe what happened in neutral terms first. Only then decide what to change." },
+    { pillar: "Confidence", book: "The Inner Game of Tennis", author: "W. Timothy Gallwey", read: true,
+      title: "Trust Self 2",
+      insight: "Over-instructing yourself in the moment undermines what you already know. Thirty years of experience is Self 2's library. Set the intention, then let it work.",
+      tryThis: "Prepare fully the day before a presentation. On the day, stop rehearsing in your head and trust what you've built." },
+    { pillar: "Focus", book: "The Way of the SEAL", author: "Mark Divine", read: true,
+      title: "Front sight focus",
+      insight: "Divine teaches keeping a single target in clear view and treating everything else as background. Focus isn't intensity; it's knowing exactly what you're aiming at right now.",
+      tryThis: "Each morning, write the one target for the day in a single sentence. When the noise hits, come back to it." },
+    { pillar: "Calm", book: "The Way of the SEAL", author: "Mark Divine", read: true,
+      title: "Box breathing resets the nervous system",
+      insight: "Breathe in for four, hold for four, out for four, hold for four. It's a SEAL tool for staying clear under pressure, and it works in two minutes before a hard call as well as in combat.",
+      tryThis: "Do five rounds of box breathing right before your most important conversation today." },
+    { pillar: "Freedom", book: "The Let Them Theory", author: "Mel Robbins", read: true,
+      title: "Let them. Then, let me.",
+      insight: "You can't control what other people think, say or decide. \"Let them\" releases you from trying. \"Let me\" turns your energy back to what you can control: your next action.",
+      tryThis: "The next time someone's opinion grabs your attention, say \"let them,\" then name one thing you'll do next." },
+    { pillar: "Initiative", book: "The 5 Second Rule", author: "Mel Robbins", read: true,
+      title: "Move before your brain talks you out of it",
+      insight: "Hesitation is where good instincts die. Counting 5-4-3-2-1 and physically moving interrupts the overthinking loop and turns intention into action.",
+      tryThis: "Pick the outreach you've been putting off. Count down from five and send it." },
+    { pillar: "Confidence", book: "Think Again", author: "Adam Grant", read: true,
+      title: "Confident humility",
+      insight: "Grant argues the strongest stance is confidence in your ability to learn paired with humility about whether you're right. Treat your views as hypotheses, not identity, and being wrong stops being a threat.",
+      tryThis: "Take one worry about the future and write it as a hypothesis. What evidence would actually test it?" },
+    { pillar: "Consistency", book: "Hidden Potential", author: "Adam Grant", read: true,
+      title: "Measure how far you've climbed",
+      insight: "Growth depends more on character skills, being proactive, disciplined and willing to stretch, than on starting talent. Progress is easier to sustain when you look at the distance covered, not the distance left.",
+      tryThis: "On Friday, list three things you moved forward this week, however small." },
+    { pillar: "Meaningful Impact", book: "Originals", author: "Adam Grant", read: true,
+      title: "Quantity leads to quality",
+      insight: "Original thinkers aren't right more often. They produce more ideas, so they get more hits. Volume is how you find the idea that changes how people work.",
+      tryThis: "Write ten ideas for your next project in ten minutes. Don't judge any of them until the list is done." },
+    { pillar: "Consistency", book: "Atomic Habits", author: "James Clear", read: false,
+      title: "Every action is a vote for who you're becoming",
+      insight: "Lasting change starts with identity, not outcomes. Each small action is evidence for the person you want to be. Make habits small enough that you never skip them.",
+      tryThis: "Shrink one practice to two minutes, like reading one page or one Meditations passage, and do it every day this week." },
+    { pillar: "Focus", book: "Essentialism", author: "Greg McKeown", read: false,
+      title: "Less, but better",
+      insight: "If you don't prioritize your life, someone else will. Essentialists say no to many good things to make room for the few that matter. If it isn't a clear yes, it's a no.",
+      tryThis: "Look at this week's commitments. Remove or delegate one that isn't a clear yes." },
+    { pillar: "Meaningful Impact", book: "Deep Work", author: "Cal Newport", read: false,
+      title: "Protect long, uninterrupted blocks",
+      insight: "The work that creates real value needs sustained concentration. Every switch to email or messages leaves attention behind, so shallow work quietly eats your best hours.",
+      tryThis: "Block 90 minutes tomorrow morning with notifications off for your most important project." },
+    { pillar: "Calm", book: "The Obstacle Is the Way", author: "Ryan Holiday", read: false,
+      title: "Perception, action, will",
+      insight: "Holiday builds on Marcus Aurelius: see the obstacle clearly without panic, act on what you can, and accept what you can't. It's Meditations 5.20 turned into a method.",
+      tryThis: "Write down your current obstacle. Under it: what's true, what can I do, what must I accept?" },
+    { pillar: "A Full Life", book: "Four Thousand Weeks", author: "Oliver Burkeman", read: false,
+      title: "You will never get it all done",
+      insight: "A lifetime is roughly four thousand weeks. Accepting that you can't do everything is freeing. It lets you choose deliberately what to neglect and stop postponing what matters.",
+      tryThis: "Choose one thing you'll consciously not do this week, and use that time for someone you love." }
   ],
 
   /* Meditations, Marcus Aurelius: Brian's curated list ("Meditations quotes" PDF).
